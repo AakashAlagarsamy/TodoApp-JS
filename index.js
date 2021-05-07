@@ -15,6 +15,7 @@ $submit.addEventListener("click", (e) => {
 });
 
 const render = () => {
+  // Text
   console.log(taskList);
   $todoList.innerHTML = "";
   $doneList.innerHTML = "";
