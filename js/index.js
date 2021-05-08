@@ -1,8 +1,8 @@
 import Task from "./task.js";
 const taskTextField = document.getElementById("taskTextField");
 const addButton = document.getElementById("addButton");
-const $todoList = document.getElementById("todoList");
-const $doneList = document.getElementById("doneList");
+const pendingList = document.getElementById("pendingList");
+const completedList = document.getElementById("completedList");
 let taskList = [];
 addButton.addEventListener("click", (e) => {
   if (taskTextField.value !== "") {
@@ -15,21 +15,21 @@ addButton.addEventListener("click", (e) => {
 
 const render = () => {
   console.log(taskList);
-  $todoList.innerHTML = "";
-  $doneList.innerHTML = "";
+  pendingList.innerHTML = "";
+  completedList.innerHTML = "";
   taskList.forEach(function (task) {
     let $taskItem = document.createElement("li");
     if (task.status === 0) {
       $taskItem.innerHTML = `<label id="${task.id}">${task.name}</label><input id="${task.id}" type="button" value="Complete" /><input id="${task.id}" type="button" value="Remove" />`;
-      $todoList.appendChild($taskItem);
+      pendingList.appendChild($taskItem);
     } else {
       $taskItem.innerHTML = `<label for="${task.id}">${task.name}</label><input id="${task.id}" type="button" value="Incomplete" /><input id="${task.id}" type="button" value="Remove" />`;
-      $doneList.appendChild($taskItem);
+      completedList.appendChild($taskItem);
     }
   });
 };
 
-$todoList.addEventListener("click", (e) => {
+pendingList.addEventListener("click", (e) => {
   let clickedTask = taskList.find((obj) => obj.id == e.target.id);
   if (e.target.value === "Complete") {
     clickedTask.changeStatus(clickedTask);
@@ -39,7 +39,7 @@ $todoList.addEventListener("click", (e) => {
   render();
 });
 
-$doneList.addEventListener("click", (e) => {
+completedList.addEventListener("click", (e) => {
   let clickedTask = taskList.find((obj) => obj.id == e.target.id);
   if (e.target.value === "Incomplete") {
     clickedTask.changeStatus(clickedTask);
