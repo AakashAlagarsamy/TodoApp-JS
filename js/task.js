@@ -10,16 +10,6 @@ export default class Task {
     return new Task(name);
   }
 
-  add(task, todoList) {
-    todoList.push(task);
-  }
-
-  remove(task, todoList) {
-    const removedArr = todoList.filter((e) => e.id !== task.id);
-    todoList = [...removedArr];
-    return todoList;
-  }
-
   changeStatus(task) {
     task.status = task.status === 0 ? 1 : 0;
   }
