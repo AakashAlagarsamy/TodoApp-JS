@@ -6,13 +6,13 @@ export default class Task {
     this.time = new Date();
   }
 
-  createNewTask(name) {
+  createNewTask = (name) => {
     return new Task(name);
-  }
+  };
 
-  changeStatus(task) {
+  changeStatus = (task) => {
     task.status = task.status === 0 ? 1 : 0;
-  }
+  };
 }
 
 Task.counter = 0;

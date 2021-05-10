@@ -28,10 +28,11 @@
     </div>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="module">
-      import { addTask, listenTaskButtonClicks } from "./js/index.js";
-      document.querySelector("#addButton").addEventListener("click", addTask);
-      pendingList.addEventListener("click", listenTaskButtonClicks);
-      completedList.addEventListener("click", listenTaskButtonClicks);
+      import Main from "./js/index.js";
+      const main = new Main();
+      main.listenEvents("addButton", main.addTask);
+      main.listenEvents("pendingList", main.listenTaskButtonClicks);
+      main.listenEvents("completedList", main.listenTaskButtonClicks);
     </script>
   </body>
 </html>
