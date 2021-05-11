@@ -5,7 +5,7 @@ export default class Task {
   }
 
   createNewTask(name) {
-    this.id = ++Task.counter;
+    this.id = utils.call().getCounterValue();
     this.name = name;
     this.status = 0;
     this.time = new Date();
@@ -15,5 +15,3 @@ export default class Task {
     task.status = task.status === 0 ? 1 : 0;
   }
 }
-
-Task.counter = 0;
