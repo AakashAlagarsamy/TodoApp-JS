@@ -27,7 +27,9 @@ export default class Main {
   };
 
   listenTaskButtonClicks = (event) => {
-    const clickedTask = tasks.find((obj) => obj.id == event.target.id);
+    const clickedTask = tasks.find(
+      (obj) => obj.id == event.target.parentNode.id
+    );
     if (
       event.target.value === "Complete" ||
       event.target.value === "Incomplete"
@@ -40,14 +42,17 @@ export default class Main {
   };
 
   createTaskListElement(task) {
-    let taskElement = document.createElement("li");
-    const statusButton =
-      task.status == 0
-        ? `<input id="${task.id}" type="button" value="Complete" />`
-        : `<input id="${task.id}" type="button" value="Incomplete" />`;
-    taskElement.innerHTML =
-      `<label id="${task.id}">${task.name}</label><input id="${task.id}" type="button" value="Remove" />` +
-      statusButton;
+    const taskElement = document.createElement("li");
+    taskElement.id = task.id;
+    const labelElement = document.createElement("label");
+    labelElement.textContent = task.name;
+    const statusButton = document.createElement("input");
+    statusButton.type = "button";
+    statusButton.value = task.status == 0 ? "Complete" : "Incomplete";
+    const removeButton = document.createElement("input");
+    removeButton.type = "button";
+    removeButton.value = "Remove";
+    taskElement.append(labelElement, statusButton, removeButton);
     return taskElement;
   }
 
