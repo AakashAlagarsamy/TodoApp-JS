@@ -1,13 +1,16 @@
 import Task from "./task.js";
-export let tasks = [];
 export default class TaskList {
+  constructor() {
+    this.tasks = [];
+  }
+
   add(taskContent) {
     let task = new Task(taskContent);
-    tasks.push(task);
+    this.tasks.push(task);
   }
 
   remove(task) {
-    const removedArr = tasks.filter((e) => e.id !== task.id);
-    tasks = [...removedArr];
+    const removedArr = this.tasks.filter((e) => e.id !== task.id);
+    this.tasks = [...removedArr];
   }
 }

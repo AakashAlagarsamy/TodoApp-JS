@@ -1,7 +1,8 @@
-import TaskList, { tasks } from "./taskList.js";
+import TaskList from "./taskList.js";
 
 export default class Main {
   constructor() {
+    this.taskList = new TaskList();
     this.listenEvents("addButton", this.addTask);
     this.listenEvents("pendingList", this.listenTaskButtonClicks);
     this.listenEvents("completedList", this.listenTaskButtonClicks);
@@ -11,23 +12,17 @@ export default class Main {
     document.getElementById(id).addEventListener("click", functionName);
   }
 
-  getTaskList() {
-    let taskList;
-    if (taskList === undefined) taskList = new TaskList();
-    return taskList;
-  }
-
   addTask = () => {
     const taskTextField = document.getElementById("taskTextField");
     if (taskTextField.value !== "") {
-      this.getTaskList().add(taskTextField.value);
+      this.taskList.add(taskTextField.value);
       this.render();
       taskTextField.value = "";
     }
   };
 
   listenTaskButtonClicks = (event) => {
-    const clickedTask = tasks.find(
+    const clickedTask = this.taskList.tasks.find(
       (obj) => obj.id == event.target.parentNode.id
     );
     if (
@@ -36,7 +31,7 @@ export default class Main {
     ) {
       clickedTask.changeStatus(clickedTask);
     } else if (event.target.value === "Remove") {
-      this.getTaskList().remove(clickedTask);
+      this.taskList.remove(clickedTask);
     }
     this.render();
   };
@@ -62,7 +57,7 @@ export default class Main {
     pendingList.innerHTML = "";
     completedList.innerHTML = "";
     let _this = this;
-    tasks.forEach(function (task) {
+    this.taskList.tasks.forEach(function (task) {
       task.status == 0
         ? pendingList.appendChild(_this.createTaskListElement(task))
         : completedList.appendChild(_this.createTaskListElement(task));
