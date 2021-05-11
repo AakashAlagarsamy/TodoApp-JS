@@ -1,15 +1,21 @@
 import TaskList, { tasks } from "./taskList.js";
 
 export default class Main {
-  listenEvents = (id, functionName) => {
-    document.getElementById(id).addEventListener("click", functionName);
-  };
+  constructor() {
+    this.listenEvents("addButton", this.addTask);
+    this.listenEvents("pendingList", this.listenTaskButtonClicks);
+    this.listenEvents("completedList", this.listenTaskButtonClicks);
+  }
 
-  getTaskList = () => {
+  listenEvents(id, functionName) {
+    document.getElementById(id).addEventListener("click", functionName);
+  }
+
+  getTaskList() {
     let taskList;
     if (taskList === undefined) taskList = new TaskList();
     return taskList;
-  };
+  }
 
   addTask = () => {
     const taskTextField = document.getElementById("taskTextField");
@@ -33,7 +39,7 @@ export default class Main {
     this.render();
   };
 
-  createTaskListElement = (task) => {
+  createTaskListElement(task) {
     let taskElement = document.createElement("li");
     const statusButton =
       task.status == 0
@@ -43,9 +49,9 @@ export default class Main {
       `<label id="${task.id}">${task.name}</label><input id="${task.id}" type="button" value="Remove" />` +
       statusButton;
     return taskElement;
-  };
+  }
 
-  render = () => {
+  render() {
     const pendingList = document.getElementById("pendingList");
     const completedList = document.getElementById("completedList");
     pendingList.innerHTML = "";
@@ -56,5 +62,5 @@ export default class Main {
         ? pendingList.appendChild(_this.createTaskListElement(task))
         : completedList.appendChild(_this.createTaskListElement(task));
     });
-  };
+  }
 }

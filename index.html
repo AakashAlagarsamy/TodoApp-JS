@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todo Application</title>
-    <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="stylesheet" href="./css/style.css" />
     <h1>Todo Application</h1>
   </head>
   <body>
@@ -30,9 +30,6 @@
     <script type="module">
       import Main from "./js/index.js";
       const main = new Main();
-      main.listenEvents("addButton", main.addTask);
-      main.listenEvents("pendingList", main.listenTaskButtonClicks);
-      main.listenEvents("completedList", main.listenTaskButtonClicks);
     </script>
   </body>
 </html>
