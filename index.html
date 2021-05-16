@@ -4,26 +4,45 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+      crossorigin="anonymous"
+    />
     <title>Todo Application</title>
     <link rel="stylesheet" href="./css/style.css" />
-    <h1>Todo Application</h1>
   </head>
   <body>
-    <div>
-      <div id="pendingContainer" class="split left">
-        <input
-          id="taskTextField"
-          type="text"
-          placeholder="Enter your task..."
-        />
-        <input id="addButton" type="submit" value="Add" />
-        <br /><br />
-        <label id="pendingListTitle">Pending List</label>
-        <ul id="pendingList"></ul>
+    <div class="rootContainer">
+      <div class="topContainer">
+        <div class="headerContainer">
+          <h1>Todo Application</h1>
+        </div>
+        <div class="inputContainer">
+          <input
+            id="taskTextField"
+            type="text"
+            placeholder="Enter your task..."
+          />
+          <button id="addButton" type="submit" value="Add">
+            <i class="addIcon fas fa-plus"></i>
+          </button>
+        </div>
       </div>
-      <div id="completedContainer" class="split right">
-        <label id="completedListTitle">Completed List</label>
-        <ul id="completedList"></ul>
+      <div id="taskContainer">
+        <div id="pendingContainer" class="split left">
+          <label id="pendingListTitle">Pending List</label>
+          <ul id="pendingList"></ul>
+        </div>
+        <div id="completedContainer" class="split right">
+          <label id="completedListTitle">Completed List</label>
+          <ul id="completedList"></ul>
+        </div>
       </div>
     </div>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>

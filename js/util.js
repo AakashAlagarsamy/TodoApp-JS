@@ -1,8 +1,22 @@
 let n = 0;
-export default function utils() {
-  return {
-    getCounterValue: function () {
-      return ++n;
-    },
-  };
+export function generateTaskId() {
+  return ++n;
+}
+
+export function getFormattedDateTime(date) {
+  const dayOfMonth = date.getDate();
+  const month = date.getMonth();
+  const year = date.getFullYear();
+  const dateString = date.toLocaleDateString(undefined, {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+  const timeString = date.toLocaleTimeString(undefined, {
+    hour12: true,
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+  return dateString + " " + timeString;
 }
