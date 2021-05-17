@@ -30,10 +30,11 @@ export default class Main {
 
   getTaskId(event) {
     let id;
-    if (event.target.nodeName === "LI") id = event.target.id;
+    if (event.target.type === "checkbox") id = event.target.parentNode.id;
+    else if (event.target.className.toString().includes("taskNameClass"))
+      id = event.target.parentNode.id;
     else if (event.target.nodeName === "I")
       id = event.target.parentNode.parentNode.id;
-    else id = event.target.parentNode.id;
     return id;
   }
 
@@ -41,9 +42,10 @@ export default class Main {
     const clickedTask = this.taskList.tasks.find(
       (obj) => obj.id == this.getTaskId(event)
     );
-    if (event.target.id === "remove") this.taskList.remove(clickedTask);
-    else if (event.target.id === "edit") this.updateTask(clickedTask);
-    else clickedTask.changeStatus(clickedTask);
+    if (clickedTask !== undefined)
+      if (event.target.id === "remove") this.taskList.remove(clickedTask);
+      else if (event.target.id === "edit") this.updateTask(clickedTask);
+      else clickedTask.changeStatus(clickedTask);
     this.render();
   };
 
