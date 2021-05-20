@@ -18,6 +18,10 @@ h1 {
   text-align: center;
 }
 
+.headerContainer {
+  margin-bottom: 10px;
+}
+
 header,
 .rootContainer {
   padding: 10px;
@@ -40,26 +44,25 @@ header,
 }
 
 #taskTextField {
-  margin: 5px;
-  padding: 0.25rem;
   font-size: 16px;
-  border: none;
   background: white;
   font-family: "Poppins", sans-serif;
-  border-radius: 10px;
   flex: 1;
 }
 
 #addButton {
-  padding: 4px;
   font-size: 20px;
-  border: none;
   background-image: linear-gradient(120deg, #00fff2, #0062ff);
-  font-family: "Poppins", sans-serif;
-  border-radius: 10px;
-  margin: 5px;
   height: 35px;
   width: 35px;
+}
+
+#taskTextField,
+#addButton {
+  margin: 5px;
+  padding: 4px;
+  border: none;
+  border-radius: 10px;
 }
 
 #taskContainer {
@@ -78,7 +81,6 @@ header,
 
 ul {
   max-height: 80%;
-  /* overflow: auto; */
 }
 
 li {
@@ -91,7 +93,7 @@ li {
   font-weight: bold;
 }
 
-input[type="checkbox"] {
+.taskCheckboxClass {
   margin-left: 10px;
   margin-right: 10px;
   height: 16px;
@@ -101,10 +103,6 @@ input[type="checkbox"] {
 .addIcon {
   font-size: 25px;
   color: white;
-}
-
-.headerContainer {
-  margin-bottom: 10px;
 }
 
 .completed {
@@ -137,10 +135,10 @@ input[type="checkbox"] {
   width: 25px;
 }
 
-.taskButtonClass.edit {
+button.taskButtonClass[data-action="edit"] {
   background-image: linear-gradient(120deg, #70ff99, #0c660f);
 }
 
-.taskButtonClass.remove {
+button.taskButtonClass[data-action="remove"] {
   background-image: linear-gradient(120deg, #ffa578, #ff0400);
 }

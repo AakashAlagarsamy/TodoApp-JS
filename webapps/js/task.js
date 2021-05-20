@@ -1,3 +1,4 @@
+/* $Id$ */
 import { generateTaskId, getFormattedDateTime } from "./util.js";
 export default class Task {
   constructor(name) {
@@ -11,12 +12,12 @@ export default class Task {
     this.timeString = getFormattedDateTime(new Date()) + " (Added) ";
   }
 
-  changeStatus(task) {
-    task.status = task.status === 0 ? 1 : 0;
+  changeTaskStatus() {
+    this.status = this.status === 0 ? 1 : 0;
   }
 
-  updateTask(task, name) {
-    task.name = name;
+  updateTask(name) {
+    this.name = name;
     this.timeString = getFormattedDateTime(new Date()) + " (Modified) ";
   }
 }

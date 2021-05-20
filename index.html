@@ -15,7 +15,7 @@
       crossorigin="anonymous"
     />
     <title>Todo Application</title>
-    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./webapps/css/style.css" />
   </head>
   <body>
     <div class="rootContainer">
@@ -35,20 +35,17 @@
         </div>
       </div>
       <div id="taskContainer">
-        <div id="pendingContainer" class="split left">
+        <div id="pendingContainer" class="split">
           <label id="pendingListTitle">Pending List</label>
           <ul id="pendingList"></ul>
         </div>
-        <div id="completedContainer" class="split right">
+        <div id="completedContainer" class="split">
           <label id="completedListTitle">Completed List</label>
           <ul id="completedList"></ul>
         </div>
       </div>
     </div>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script type="module">
-      import Main from "./js/index.js";
-      const main = new Main();
-    </script>
+    <script type="module" src="./webapps/js/index.js"></script>
   </body>
 </html>

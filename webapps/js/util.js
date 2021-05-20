@@ -1,3 +1,4 @@
+/* $Id$ */
 let n = 0;
 export function generateTaskId() {
   return ++n;

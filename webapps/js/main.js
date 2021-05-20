@@ -1,75 +1,89 @@
+/* $Id$ */
 import TaskList from "./taskList.js";
 
 export default class Main {
   constructor() {
     this.taskList = new TaskList();
-    this.listenEvents("taskTextField", this.addTaskByPressingEnter);
-    this.listenEvents("addButton", this.addTask);
-    this.listenEvents("pendingList", this.listenTaskButtonClicks);
-    this.listenEvents("completedList", this.listenTaskButtonClicks);
+    this.bindEventListeners();
   }
 
-  listenEvents(id, functionName) {
-    if (id === "taskTextField")
-      document.getElementById(id).addEventListener("keypress", functionName);
-    document.getElementById(id).addEventListener("click", functionName);
+  bindEventListeners() {
+    document
+      .getElementById("taskTextField")
+      .addEventListener("keypress", this.handleKeyPress.bind(this));
+    document
+      .getElementById("addButton")
+      .addEventListener("click", this.handleAddTask.bind(this));
+    document
+      .getElementById("pendingList")
+      .addEventListener("click", this.handleTaskEvents.bind(this));
+    document
+      .getElementById("completedList")
+      .addEventListener("click", this.handleTaskEvents.bind(this));
   }
 
-  addTaskByPressingEnter = (event) => {
-    if (event.code === "Enter") this.addTask();
-  };
+  handleKeyPress(event) {
+    if (event.code === "Enter" || event.code === "NumpadEnter") {
+      this.handleAddTask();
+    }
+  }
 
-  addTask = () => {
+  handleAddTask() {
     const taskTextField = document.getElementById("taskTextField");
     if (taskTextField.value !== "") {
       this.taskList.add(taskTextField.value);
       this.render();
       taskTextField.value = "";
     }
-  };
-
-  getTaskId(event) {
-    let id;
-    if (event.target.type === "checkbox") id = event.target.parentNode.id;
-    else if (event.target.className.toString().includes("taskNameClass"))
-      id = event.target.parentNode.id;
-    else if (event.target.nodeName === "I")
-      id = event.target.parentNode.parentNode.id;
-    return id;
   }
 
-  listenTaskButtonClicks = (event) => {
-    const clickedTask = this.taskList.tasks.find(
-      (obj) => obj.id == this.getTaskId(event)
-    );
-    if (clickedTask !== undefined)
-      if (event.target.id === "remove") this.taskList.remove(clickedTask);
-      else if (event.target.id === "edit") this.updateTask(clickedTask);
-      else clickedTask.changeStatus(clickedTask);
+  handleTaskEvents(event) {
+    const id = Number(event.target.closest("li").id);
+    const task = this.taskList.getTask(id);
+    const action = event.target.dataset.action;
+    if (action === "remove") {
+      this.handleRemoveTask(task);
+    } else if (action === "edit") {
+      this.handleUpdateTask(task);
+    } else if (action === "click") {
+      this.handleChangeTask(task);
+    }
     this.render();
-  };
+  }
 
-  updateTask(clickedTask) {
-    let updatedTaskName = prompt("Enter the updated task..", clickedTask.name);
-    if (clickedTask.name === updatedTaskName || updatedTaskName === null) {
+  handleUpdateTask(task) {
+    // No I18N
+    const updatedTaskName = prompt("Enter the updated task..", task.name);
+    if (task.name === updatedTaskName || updatedTaskName === null) {
+      // No I18N
       alert("No changes found!");
     } else if (updatedTaskName === "") {
+      // No I18N
       alert("Invalid task name, Please try again!");
     } else {
-      clickedTask.updateTask(clickedTask, updatedTaskName);
+      task.updateTask(updatedTaskName);
     }
   }
 
-  createIconButton(iconClassName, id) {
+  handleChangeTask(task) {
+    task.changeTaskStatus();
+  }
+
+  handleRemoveTask(task) {
+    this.taskList.remove(task);
+  }
+
+  createIconButton(iconClassName, action) {
+    // Button Element
     const button = document.createElement("button");
-    button.id = id;
     button.classList.add("taskButtonClass");
-    button.classList.add(id);
+    button.dataset.action = action;
+    // Icon Element
     const icon = document.createElement("i");
-    icon.id = id;
     icon.classList.add("taskIconClass");
     icon.classList.add("fas");
     icon.classList.add(iconClassName);
+    icon.dataset.action = action;
     button.appendChild(icon);
     return button;
   }
@@ -81,10 +95,13 @@ export default class Main {
     // Input Checkbox Tag
     const checkBox = document.createElement("input");
     checkBox.type = "checkbox";
+    checkBox.className = "taskCheckboxClass";
+    checkBox.dataset.action = "click";
     checkBox.checked = task.status == 0 ? false : true;
     // Label Tag - Task Name
     const labelElement = document.createElement("label");
     labelElement.className = "taskNameClass";
+    labelElement.dataset.action = "click";
     labelElement.textContent = task.name;
     if (task.status === 1) labelElement.classList.add("completed");
     // Br Tag
